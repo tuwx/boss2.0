@@ -12,6 +12,7 @@
   
   
   <build>
+    <finalName>bos_sms</finalName>
   	<plugins>
   		<plugin>
   			<groupId>org.codehaus.mojo</groupId>

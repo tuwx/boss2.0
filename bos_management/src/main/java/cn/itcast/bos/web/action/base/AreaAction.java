@@ -115,23 +115,23 @@ public class AreaAction extends BaseAction<Area> {
 			@Override
 			public Predicate toPredicate(Root<Area> root,
 					CriteriaQuery<?> query, CriteriaBuilder cb) {
-				Predicate predicate = null;
-				if (StringUtils.isNoneBlank(model.getProvince())) {
+				List<Predicate> list = new ArrayList<Predicate>();
+				if (StringUtils.isNotBlank(model.getProvince())) {
 					Predicate p1 = cb.like(root.get("province")
 							.as(String.class), "%" + model.getProvince() + "%");
-					predicate = cb.and(p1);
+					list.add(p1);
 				}
-				if (StringUtils.isNoneBlank(model.getCity())) {
+				if (StringUtils.isNotBlank(model.getCity())) {
 					Predicate p2 = cb.like(root.get("city").as(String.class),
 							"%" + model.getCity() + "%");
-					predicate = cb.and(p2);
+					list.add(p2);
 				}
-				if (StringUtils.isNoneBlank(model.getDistrict())) {
+				if (StringUtils.isNotBlank(model.getDistrict())) {
 					Predicate p3 = cb.like(root.get("district")
 							.as(String.class), "%" + model.getDistrict() + "%");
-					predicate = cb.and(p3);
+					list.add(p3);
 				}
-				return predicate;
+				return cb.and(list.toArray(new Predicate[0]));
 			}
 		};
 		// 调用业务层完成查询
@@ -141,5 +141,4 @@ public class AreaAction extends BaseAction<Area> {
 
 		return SUCCESS;
 	}
-
 }

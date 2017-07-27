@@ -21,12 +21,12 @@ public class SmsConsumer implements MessageListener {
 			String result = "000/xxxx";
 			if (result.startsWith("000")) {
 				// 发送成功
-				System.out.println("发送短信成功,手机号："
-						+ mapMessage.getString("telephone") + "，验证码："
-						+ mapMessage.getString("msg"));
+				System.out.println(
+						"发送短信成功,手机号：" + mapMessage.getString("telephone") + 
+						"，短信内容：" + mapMessage.getString("msg"));
 			} else {
 				// 发送失败
-				throw new RuntimeException("短信发送失败, 信息码：" + result);
+				throw new RuntimeException("短信发送失败, 短信内容：" + result);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

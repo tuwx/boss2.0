@@ -1,5 +1,6 @@
 package cn.itcast.bos.web.action.base;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,24 +82,25 @@ public class CourierAction extends ActionSupport implements
 			// Root 用于获取属性字段，CriteriaQuery可以用于简单条件查询，CriteriaBuilder 用于构造复杂条件查询
 			public Predicate toPredicate(Root<Courier> root,
 					CriteriaQuery<?> query, CriteriaBuilder cb) {
-				Predicate predicate = null;
+				List<Predicate> list = new ArrayList<Predicate>();
+
 				// 简单单表查询
-				if (StringUtils.isNoneBlank(courier.getCourierNum())) {
+				if (StringUtils.isNotBlank(courier.getCourierNum())) {
 					Predicate p1 = cb.equal(
 							root.get("courierNum").as(String.class),
 							courier.getCourierNum());
-					predicate = cb.and(p1);
+					list.add(p1);
 				}
-				if (StringUtils.isNoneBlank(courier.getCompany())) {
+				if (StringUtils.isNotBlank(courier.getCompany())) {
 					Predicate p2 = cb.like(
 							root.get("company").as(String.class),
 							"%" + courier.getCompany() + "%");
-					predicate = cb.and(p2);
+					list.add(p2);
 				}
-				if (StringUtils.isNoneBlank(courier.getType())) {
+				if (StringUtils.isNotBlank(courier.getType())) {
 					Predicate p3 = cb.equal(root.get("type").as(String.class),
 							courier.getType());
-					predicate = cb.and(p3);
+					list.add(p3);
 				}
 				// 多表查询
 				Join<Courier, Standard> standardJoin = root.join("standard",
@@ -106,12 +108,12 @@ public class CourierAction extends ActionSupport implements
 				if (courier.getStandard() != null
 						&& StringUtils.isNotBlank(courier.getStandard()
 								.getName())) {
-					Predicate p4 = cb.equal(
-							standardJoin.get("name").as(String.class), courier
-									.getStandard().getName());
-					predicate = cb.and(p4);
+					Predicate p4 = cb.like(
+							standardJoin.get("name").as(String.class), "%"
+									+ courier.getStandard().getName() + "%");
+					list.add(p4);
 				}
-				return predicate;
+				return cb.and(list.toArray(new Predicate[0]));
 			}
 		};
 

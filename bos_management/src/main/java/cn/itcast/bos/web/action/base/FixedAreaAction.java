@@ -1,6 +1,8 @@
 package cn.itcast.bos.web.action.base;
 
 import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -53,24 +55,28 @@ public class FixedAreaAction extends BaseAction<FixedArea> {
 	public String pageQuery() {
 		// 构造Pageable
 		Pageable pageable = new PageRequest(page - 1, rows);
-		// 构造Specification
+		// 构造条件查询对象
 		Specification<FixedArea> specification = new Specification<FixedArea>() {
 			@Override
 			public Predicate toPredicate(Root<FixedArea> root,
 					CriteriaQuery<?> query, CriteriaBuilder cb) {
-				Predicate predicate = null;
-				if (StringUtils.isNoneBlank(model.getId())) {
+				List<Predicate> list = new ArrayList<Predicate>();
+				// 构造查询条件
+				if (StringUtils.isNotBlank(model.getId())) {
+					// 根据 定区编号查询 等值
 					Predicate p1 = cb.equal(root.get("id").as(String.class),
 							model.getId());
-					predicate = cb.and(p1);
+					list.add(p1);
 				}
-				if (StringUtils.isNoneBlank(model.getCompany())) {
+				if (StringUtils.isNotBlank(model.getCompany())) {
+					// 根据公司查询 模糊
 					Predicate p2 = cb.like(
 							root.get("company").as(String.class),
 							"%" + model.getCompany() + "%");
-					predicate = cb.and(p2);
+					list.add(p2);
 				}
-				return predicate;
+
+				return cb.and(list.toArray(new Predicate[0]));
 			}
 		};
 		// 调用业务层，查询数据
