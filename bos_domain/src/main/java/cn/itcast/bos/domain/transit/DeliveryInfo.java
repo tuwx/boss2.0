@@ -12,7 +12,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "T_DELIVERY_INFO")
 public class DeliveryInfo {
-
 	@Id
 	@GeneratedValue
 	@Column(name = "C_ID")
