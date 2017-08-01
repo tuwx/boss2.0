@@ -1,5 +1,7 @@
 package cn.itcast.bos.service.take_delivery.impl;
 
+import java.util.List;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -44,11 +46,16 @@ public class WayBillServiceImpl implements WayBillService {
 		} else {
 			// 运单存在
 			try {
-				Integer id = persistWayBill.getId();
-				BeanUtils.copyProperties(persistWayBill, wayBill);
-				persistWayBill.setId(id);
-				// 保存索引
-				wayBillIndexRepository.save(persistWayBill);
+				if (wayBill.getSignStatus()==1) {
+					
+					Integer id = persistWayBill.getId();
+					BeanUtils.copyProperties(persistWayBill, wayBill);
+					persistWayBill.setId(id);
+					// 保存索引
+					wayBillIndexRepository.save(persistWayBill);
+				}else {
+					throw new RuntimeException("运单与发送，无法修改");
+				}
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -135,5 +142,10 @@ public class WayBillServiceImpl implements WayBillService {
 			return wayBillIndexRepository.search(searchQuery);
 		}
 
+	}
+	
+	public void syncIndex(){
+		List<WayBill> wayBills =  wayBillRepository.findAll();
+		wayBillIndexRepository.save(wayBills);
 	}
 }

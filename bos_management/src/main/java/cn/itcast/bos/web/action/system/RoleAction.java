@@ -42,7 +42,7 @@ public class RoleAction extends BaseAction<Role>{
 			this.menuIds = menuIds;
 		}
 	
-	@Action(value="menu_save",results={@Result(name="success",type="redirect",location="pages/system/role.html")})
+	@Action(value="role_save",results={@Result(name="success",type="redirect",location="pages/system/role.html")})
 	public String save(){
 		roleService.save(model,permissionIds,menuIds);
 		return SUCCESS;

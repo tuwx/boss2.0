@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import cn.itcast.bos.domain.system.User;
-
+import cn.itcast.bos.service.system.UserService;
 import cn.itcast.bos.web.action.common.BaseAction;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -57,4 +57,28 @@ public class UserAction extends BaseAction<User> {
 		subject.logout();
 		return SUCCESS;
 	}
+	
+	@Autowired
+	private UserService userService;
+	
+	@Action(value="user_list",results={@Result(name="success",type="json")})
+	public String list(){
+		List<User> users = userService.findAll();
+		ActionContext.getContext().getValueStack().push(users);
+		return SUCCESS;
+	}
+	
+	private String[] roleIds;
+	
+	
+	public void setRoleIds(String[] roleIds) {
+		this.roleIds = roleIds;
+	}
+
+	@Action(value="user_save",results={@Result(name="success",type="redirect",location="pagea/system/userindex.html")})
+	public String save(){
+		userService.save(model,roleIds);
+		return SUCCESS;
+	}
+	
 }

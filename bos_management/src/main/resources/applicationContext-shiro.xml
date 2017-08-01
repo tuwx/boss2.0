@@ -45,20 +45,20 @@
 	<bean id="securityManager" 
 		class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="bosRealm" />
-		<!-- <property name="cacheManager" ref="shiroCacheManager" /> -->
+		<property name="cacheManager" ref="shiroCacheManager" />
 	</bean>
-	
+	 
 	<!-- 配置Realm -->
-	<!-- <bean id="bosRealm" class="cn.itcast.bos.realm.BosRealm">
-		缓存区的名字 就是 ehcache.xml 自定义 cache的name
+	<bean id="bosRealm" class="cn.itcast.bos.realm.BosRealm">
+		<!-- 缓存区的名字 就是 ehcache.xml 自定义 cache的name -->
 		<property name="authorizationCacheName" value="bos" />
-	</bean> -->
+	</bean>
 	
 	<bean id="lifecycleBeanPostProcessor"
 		class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 		
 	<!-- 开启shiro注解模式  -->
-	<!-- <bean
+	<bean
 		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
 		depends-on="lifecycleBeanPostProcessor" >
 		<property name="proxyTargetClass" value="true" />
@@ -67,5 +67,5 @@
 	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
 		 <property name="securityManager" ref="securityManager"/>
 	</bean>
-	 -->
+	
 </beans>

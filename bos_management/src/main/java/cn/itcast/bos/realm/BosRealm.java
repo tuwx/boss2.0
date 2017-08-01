@@ -24,8 +24,8 @@ import cn.itcast.bos.service.system.PermissionService;
 import cn.itcast.bos.service.system.RoleService;
 import cn.itcast.bos.service.system.UserService;
 
-@Service("bosRealm")
-@Transactional
+/*@Service("bosRealm")
+@Transactional*/
 public class BosRealm extends AuthorizingRealm{
 	
 	@Autowired
