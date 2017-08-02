@@ -20,7 +20,7 @@ import org.apache.struts2.json.annotations.JSON;
  */
 @Entity
 @Table(name = "T_ROLE")
-public class Role implements Serializable{
+public class Role implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "C_ID")
@@ -36,15 +36,11 @@ public class Role implements Serializable{
 	private Set<User> users = new HashSet<User>(0);
 
 	@ManyToMany
-	@JoinTable(name = "T_ROLE_PERMISSION", joinColumns = {
-			@JoinColumn(name = "C_ROLE_ID", referencedColumnName = "C_ID") }, inverseJoinColumns = {
-					@JoinColumn(name = "C_PERMISSION_ID", referencedColumnName = "C_ID") })
+	@JoinTable(name = "T_ROLE_PERMISSION", joinColumns = { @JoinColumn(name = "C_ROLE_ID", referencedColumnName = "C_ID") }, inverseJoinColumns = { @JoinColumn(name = "C_PERMISSION_ID", referencedColumnName = "C_ID") })
 	private Set<Permission> permissions = new HashSet<Permission>(0);
 
 	@ManyToMany
-	@JoinTable(name = "T_ROLE_MENU", joinColumns = {
-			@JoinColumn(name = "C_ROLE_ID", referencedColumnName = "C_ID") }, inverseJoinColumns = {
-					@JoinColumn(name = "C_MENU_ID", referencedColumnName = "C_ID") })
+	@JoinTable(name = "T_ROLE_MENU", joinColumns = { @JoinColumn(name = "C_ROLE_ID", referencedColumnName = "C_ID") }, inverseJoinColumns = { @JoinColumn(name = "C_MENU_ID", referencedColumnName = "C_ID") })
 	private Set<Menu> menus = new HashSet<Menu>(0);
 
 	public int getId() {
@@ -59,7 +55,6 @@ public class Role implements Serializable{
 		return name;
 	}
 
-	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -80,7 +75,7 @@ public class Role implements Serializable{
 		this.description = description;
 	}
 
-	@JSON(serialize=false)
+	@JSON(serialize = false)
 	public Set<User> getUsers() {
 		return users;
 	}
@@ -89,7 +84,7 @@ public class Role implements Serializable{
 		this.users = users;
 	}
 
-	@JSON(serialize=false)
+	@JSON(serialize = false)
 	public Set<Permission> getPermissions() {
 		return permissions;
 	}
@@ -98,7 +93,7 @@ public class Role implements Serializable{
 		this.permissions = permissions;
 	}
 
-	@JSON(serialize=false)
+	@JSON(serialize = false)
 	public Set<Menu> getMenus() {
 		return menus;
 	}

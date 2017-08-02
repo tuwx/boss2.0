@@ -18,7 +18,7 @@ import org.apache.struts2.json.annotations.JSON;
  */
 @Entity
 @Table(name = "T_PERMISSION")
-public class Permission implements Serializable{
+public class Permission implements Serializable {
 
 	@Id
 	@GeneratedValue
@@ -58,12 +58,11 @@ public class Permission implements Serializable{
 		this.keyword = keyword;
 	}
 
-	@JSON(serialize=false)
+	@JSON(serialize = false)
 	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}

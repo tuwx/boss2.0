@@ -15,9 +15,9 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldIndex;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import cn.itcast.bos.domain.base.Area;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @description:运单实体类
@@ -39,8 +39,8 @@ public class WayBill implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "C_ORDER_ID")
 	private Order order; // 订单信息
+
 	@Column(name = "C_SEND_NAME")
-	
 	@Field(index = FieldIndex.analyzed, analyzer = "ik", searchAnalyzer = "ik", store = true, type = FieldType.String)
 	private String sendName; // 寄件人姓名
 	@Column(name = "C_SEND_MOBILE")
@@ -147,6 +147,7 @@ public class WayBill implements Serializable {
 		this.wayBillNum = wayBillNum;
 	}
 
+	@JsonIgnore
 	public Order getOrder() {
 		return order;
 	}
@@ -179,6 +180,7 @@ public class WayBill implements Serializable {
 		this.sendCompany = sendCompany;
 	}
 
+	@JsonIgnore
 	public Area getSendArea() {
 		return sendArea;
 	}
