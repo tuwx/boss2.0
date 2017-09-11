@@ -8,6 +8,6 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/crm_management/target/classes"/>
-        <property name="context-root" value="bos"/>
+        <property name="context-root" value="crm_management"/>
     </wb-module>
 </project-modules>
